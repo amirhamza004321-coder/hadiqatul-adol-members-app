@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HADIQATUL A'DOL Members</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #222;
+      --accent: #4cafef;
+    }
+    body.dark { --bg: #1e1e2f; --card: #2c2c3e; --text: #f9f9f9; --accent: #6ab4ff; }
+    body.green { --accent: #4caf50; }
+    body.purple { --accent: #9c27b0; }
+
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: background 0.5s, color 0.5s; }
+
+    header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--accent); color: white; }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    .menu { font-size: 24px; cursor: pointer; user-select: none; }
+
+    .menu-options { display: none; background: var(--card); box-shadow: 0 4px 10px rgba(0,0,0,0.2); padding: 10px; position: absolute; right: 20px; top: 60px; border-radius: 10px; animation: fadeIn 0.3s ease; }
+    .menu-options button { display: block; width: 100%; margin: 5px 0; padding: 8px 10px; border: none; border-radius: 6px; cursor: pointer; background: var(--accent); color: white; transition: 0.3s; }
+    .menu-options button:hover { opacity: 0.8; }
+
+    .container { max-width: 900px; margin: 30px auto; padding: 20px; }
+
+    .search-box { text-align: center; margin-bottom: 20px; }
+    .search-box input { padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 8px; }
+    .search-box button { padding: 10px 15px; border: none; border-radius: 8px; background: var(--accent); color: white; cursor: pointer; margin-left: 10px; }
+
+    h2 { margin-top: 40px; color: var(--accent); font-size: 1.2rem; }
+
+    .card { background: var(--card); padding: 15px; margin: 10px 0; border-radius: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s, background 0.3s; }
+    .card:hover { transform: scale(1.02); background: rgba(76,175,239,0.1); }
+    .details { margin-top: 10px; padding: 10px; border-left: 3px solid var(--accent); display: none; animation: slideDown 0.4s ease forwards; }
+    .details button { margin: 5px; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; background: var(--accent); color: white; font-size: 0.9rem; }
+
+    footer { text-align: center; padding: 20px; margin-top: 40px; font-size: 0.9rem; background: var(--card); border-top: 2px solid var(--accent); }
+
+    @keyframes slideDown { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HADIQATUL A'DOL Members</h1>
+    <div class="menu" onclick="toggleMenu()">☰</div>
+    <div class="menu-options" id="menuOptions">
+      <button onclick="setTheme('light')">Light Theme</button>
+      <button onclick="setTheme('dark')">Dark Theme</button>
+      <button onclick="setTheme('green')">Green Theme</button>
+      <button onclick="setTheme('purple')">Purple Theme</button>
+      <button onclick="showFavorites()">View Favorites ⭐</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Enter Member ID...">
+      <button onclick="searchMember()">Search</button>
+    </div>
+    <div id="searchResult"></div>
+
+    <h2>Admin</h2>
+    <div class="card" onclick="toggleDetails('admin1')">HA-25X9Q7-01
+      <div class="details" id="admin1">
+        <p><strong>Full Name:</strong> Md Amir Hamza (Admin)</p>
+        <p><strong>Address:</strong> Johirpur, Chhatak, Sunamgonj</p>
+        <p><strong>Member Id:</strong> HA-25X9Q7-01</p>
+        <button onclick="event.stopPropagation(); addFavorite('HA-25X9Q7-01')">⭐ Favorite</button>
+        <button onclick="event.stopPropagation(); shareMember('HA-25X9Q7-01')">📋 Copy</button>
+        <button onclick="event.stopPropagation(); downloadPDF('HA-25X9Q7-01')">📑 PDF</button>
+      </div>
+    </div>
+
+    <h2>Members</h2>
+    <div class="card" onclick="toggleDetails('member1')">HA-25K4M2-02
+      <div class="details" id="member1">
+        <p><strong>Full Name:</strong> Munaim Ahmed Ihfaz (Member)</p>
+        <p><strong>Address:</strong> Bade Jhigli, Chhatak, Sunamgonj</p>
+        <p><strong>Member Id:</strong> HA-25K4M2-02</p>
+        <button onclick="event.stopPropagation(); addFavorite('HA-25K4M2-02')">⭐ Favorite</button>
+        <button onclick="event.stopPropagation(); shareMember('HA-25K4M2-02')">📋 Copy</button>
+        <button onclick="event.stopPropagation(); downloadPDF('HA-25K4M2-02')">📑 PDF</button>
+      </div>
+    </div>
+    <div class="card" onclick="toggleDetails('member2')">HA-25Z7L8-03
+      <div class="details" id="member2">
+        <p><strong>Full Name:</strong> Minhaz Uddin Kadir (Member)</p>
+        <p><strong>Address:</strong> Bade Jhigli (Kandal Para), Chhatak, Sunamgonj</p>
+        <p><strong>Member Id:</strong> HA-25Z7L8-03</p>
+        <button onclick="event.stopPropagation(); addFavorite('HA-25Z7L8-03')">⭐ Favorite</button>
+        <button onclick="event.stopPropagation(); shareMember('HA-25Z7L8-03')">📋 Copy</button>
+        <button onclick="event.stopPropagation(); downloadPDF('HA-25Z7L8-03')">📑 PDF</button>
+      </div>
+    </div>
+    <div class="card" onclick="toggleDetails('member3')">HA-25R6P5-04
+      <div class="details" id="member3">
+        <p><strong>Full Name:</strong> Ebrahim Jamal Abdullah (Member)</p>
+        <p><strong>Address:</strong> Boratuka, Chhatak, Sunamgonj</p>
+        <p><strong>Member Id:</strong> HA-25R6P5-04</p>
+        <button onclick="event.stopPropagation(); addFavorite('HA-25R6P5-04')">⭐ Favorite</button>
+        <button onclick="event.stopPropagation(); shareMember('HA-25R6P5-04')">📋 Copy</button>
+        <button onclick="event.stopPropagation(); downloadPDF('HA-25R6P5-04')">📑 PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© HADIQATUL A'DOL 2025 | Developed by Md Amir Hamza</p>
+  </footer>
+
+  <script>
+    const data = {
+      "HA-25X9Q7-01": {name:"Md Amir Hamza (Admin)", address:"Johirpur, Chhatak, Sunamgonj", id:"HA-25X9Q7-01"},
+      "HA-25K4M2-02": {name:"Munaim Ahmed Ihfaz (Member)", address:"Bade Jhigli, Chhatak, Sunamgonj", id:"HA-25K4M2-02"},
+      "HA-25Z7L8-03": {name:"Minhaz Uddin Kadir (Member)", address:"Bade Jhigli (Kandal Para), Chhatak, Sunamgonj", id:"HA-25Z7L8-03"},
+      "HA-25R6P5-04": {name:"Ebrahim Jamal Abdullah (Member)", address:"Boratuka, Chhatak, Sunamgonj", id:"HA-25R6P5-04"}
+    };
+
+    function toggleMenu() {
+      const menu = document.getElementById('menuOptions');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function setTheme(mode) {
+      document.body.className = mode === 'light' ? '' : mode;
+      localStorage.setItem('theme', mode);
+      document.getElementById('menuOptions').style.display = 'none';
+    }
+
+    window.onload = () => {
+      const saved = localStorage.getItem('theme');
+      if(saved) setTheme(saved);
+    }
+
+    function toggleDetails(id) {
+      const detail = document.getElementById(id);
+      detail.style.display = (detail.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function searchMember() {
+      const input = document.getElementById('searchInput').value.trim();
+      const result = document.getElementById('searchResult');
+      if (data[input]) {
+        result.innerHTML = `
+          <div class="card"><div class="details" style="display:block">
+            <p><strong>Full Name:</strong> ${data[input].name}</p>
+            <p><strong>Address:</strong> ${data[input].address}</p>
+            <p><strong>Member Id:</strong> ${data[input].id}</p>
+            <button onclick="addFavorite('${data[input].id}')">⭐ Favorite</button>
+            <button onclick="shareMember('${data[input].id}')">📋 Copy</button>
+            <button onclick="downloadPDF('${data[input].id}')">📑 PDF</button>
+          </div></div>`;
+      } else {
+        result.innerHTML = `<p style="color:red;text-align:center">No member found with this ID.</p>`;
+      }
+    }
+
+    function addFavorite(id) {
+      let favs = JSON.parse(localStorage.getItem('favorites')||'[]');
+      if(!favs.includes(id)) favs.push(id);
+      localStorage.setItem('favorites', JSON.stringify(favs));
+      alert("Added to Favorites!");
+    }
+
+    function removeFavorite(id) {
+      let favs = JSON.parse(localStorage.getItem('favorites')||'[]');
+      favs = favs.filter(f => f !== id);
+      localStorage.setItem('favorites', JSON.stringify(favs));
+      showFavorites();
+    }
+
+    function showFavorites() {
+      const favs = JSON.parse(localStorage.getItem('favorites')||'[]');
+      let html = "<h2>⭐ Favorite Members</h2>";
+      favs.forEach(f => {
+        if(data[f]) {
+          html += `<div class="card"><div class="details" style="display:block">
+            <p><strong>Full Name:</strong> ${data[f].name}</p>
+            <p><strong>Address:</strong> ${data[f].address}</p>
+            <p><strong>Member Id:</strong> ${data[f].id}</p>
+            <button onclick="removeFavorite('${data[f].id}')">❌ Remove</button>
+          </div></div>`;
+        }
+      });
+      if(favs.length === 0) html += "<p style='color:gray;text-align:center'>No favorites added.</p>";
+      document.querySelector('.container').innerHTML = html;
+    }
+
+    function shareMember(id) {
+      const member = data[id];
+      const text = `Full Name: ${member.name}
+Address: ${member.address}
+Member ID: ${member.id}`;
+      navigator.clipboard.writeText(text).then(()=>{
+        alert("Copied to clipboard!");
+      });
+    }
+
+    async function downloadPDF(id) {
+      const { jsPDF } = window.jspdf;
+      const member = data[id];
+      const doc = new jsPDF();
+      doc.setFontSize(14);
+      doc.text("HADIQATUL A'DOL Member Details", 20, 20);
+      doc.text(`Full Name: ${member.name}`, 20, 40);
+      doc.text(`Address: ${member.address}`, 20, 50);
+      doc.text(`Member Id: ${member.id}`, 20, 60);
+      doc.save(`${member.id}.pdf`);
+    }
+  </script>
+</body>
+</html>
